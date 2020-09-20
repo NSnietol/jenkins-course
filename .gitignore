@@ -21,3 +21,6 @@ jenkins-data/
 .classpath
 .project
 bin/
+
+*key
+*.pub
