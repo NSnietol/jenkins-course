@@ -1,0 +1,45 @@
+folder('wegii') {
+    displayName('Weggi A')
+    description('Folder for project A')
+}
+
+folder('wegii/testing') {
+    description('Folder containing all QA jobs for project A')
+}
+
+
+freeStyleJob('wegii/testing/example') {
+
+     wrappers {
+        timestamps()
+    }
+  
+    scm {
+        github('gradle/gradle-build-scan-quickstart', 'master')
+    }
+ 	
+  
+  	environmentVariables {
+
+        propertiesFile('env.properties')
+ 
+    }
+
+    steps {
+      
+      shell('echo $ENV_NAME!')
+
+      gradle{
+        
+             gradleName("gradle-latest")
+
+             tasks('clean test')
+        		
+        	 useWrapper(false)
+
+      }
+
+   
+    }
+
+}
