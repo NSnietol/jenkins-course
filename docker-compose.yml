@@ -9,24 +9,9 @@ services:
       - "8080:8080"
     volumes:
       - ./jenkins-data:/var/jenkins_home
-
-    networks:
-      - net
-      
-
-#  git:
-#    container_name: gitlab-server
-#    hostname: gitlab.nnieto.com
-#    image: gitlab/gitlab-ce
-#    volumes:
-#      - "/srv/gitlab/config:/etc/gitlab"
-#      - "/srv/gitlab/logs:/var/log/gitlab"
-#      - "/srv/gitlab/data:/var/opt/gitlab"
-#    ports:
-#      - "80:80"
-#      - "443:443"
-#    networks:
-#      - net
-
-networks:
-  net:
+    restart: always
+  jenkins_slave:
+    image: jenkinsci/jnlp-slave
+    container_name: jenkins_slave_1
+    command: -url http://localhost:8080 9342fb2b08caeb4e6643afa29609e346a24a08331ab0f38cc98733de0d2cf284 jnlp-docker-slave
+    restart: always
