@@ -7,11 +7,17 @@ services:
       context: images/jenkins_docker
     ports:
       - "8080:8080"
+      - "50000:50000"
     volumes:
       - ./jenkins-data:/var/jenkins_home
     restart: always
   jenkins_slave:
-    image: jenkinsci/jnlp-slave
+    image: lsegal/jnlp-docker-agent
     container_name: jenkins_slave_1
-    command: -url http://localhost:8080 9342fb2b08caeb4e6643afa29609e346a24a08331ab0f38cc98733de0d2cf284 jnlp-docker-slave
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp:/home/workspace/docker-pipe
+      - /tmp:/home/workspace/docker-pipe@tmp
+      # Make sure to use your Docker ip instead. Get it by looking up ifconfig info
+    command: -url http://172.17.0.1:8080 2cc52fb4c7ffac63ea504f7093b1cbc2801eb3d596b55b1d2416fbbcc4afc0b5 node
     restart: always
